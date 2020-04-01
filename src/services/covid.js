@@ -10,7 +10,7 @@ service.getByCountry = (country) => {
             "x-rapidapi-host": "covid-193.p.rapidapi.com",
             "x-rapidapi-key": "90e013270emsh108a1289e8d917ep1f1e3fjsn3f72ee3b8e98"
         }, params: {
-            country: country
+            "country": country
         }
     })
 }

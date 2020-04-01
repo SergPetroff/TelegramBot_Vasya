@@ -28,12 +28,17 @@ Spain
 Germany`));
 
 bot.hears(/.*/, async ctx => {
-    const {data} = await covidService.getByCountry(ctx.message.text);
-    if(data && data.results===0){
-        return ctx.reply(`Страна не найдена`)
-    }
-    console.log(`Country:${data.response[0].country}`)
-    return ctx.replyWithMarkdown(formatCountryMsg(data.response[0]))
+    try {
+        const {data} = await covidService.getByCountry(ctx.message.text);
+        if(data && data.results===0){
+            return ctx.reply(`Страна не найдена`)
+        }
+        console.log(`Country:${data.response[0].country}`)
+        return ctx.replyWithMarkdown(formatCountryMsg(data.response[0])
+        )
+    }catch(e) {
+        console.log(`Error! ${e}`)
+      }
 });
 
 bot.launch().then(res =>{
