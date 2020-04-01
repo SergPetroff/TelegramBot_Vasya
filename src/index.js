@@ -20,10 +20,11 @@ bot.hears(/.*/, async ctx => {
     if(data && data.results===0){
         return ctx.reply(`Страна не найдена`)
     }
+    console.log(`Country:${data.country}`)
     return ctx.replyWithMarkdown(formatCountryMsg(data.response[0]))
 });
 
 bot.launch().then(res =>{
     const date = new Date();
     console.log(`Bot launched at ${date}`)
-}).catch(err => console.log(err));
+}).catch(err => console.log(`Bot error: ${err}`));
