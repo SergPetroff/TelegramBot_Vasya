@@ -40,8 +40,12 @@ bot.hears(/.*/, async ctx => {
         console.log(`Error! ${e}`)
       }
 });
-
-bot.launch().then(res =>{
+bot.startPolling().then(res =>{
     const date = new Date();
     console.log(`Bot launched at ${date}`)
 }).catch(err => console.log(`Bot error: ${err}`));
+
+// bot.launch().then(res =>{
+//     const date = new Date();
+//     console.log(`Bot launched at ${date}`)
+// }).catch(err => console.log(`Bot error: ${err}`));
