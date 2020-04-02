@@ -18,8 +18,8 @@ const port = process.env.PORT || 3000;
 const bot = new Telegraf(BOT_TOKEN);
 
 
-bot.telegram.setWebhook(`${URL}/bot${API_TOKEN}`);
-expressApp.use(bot.webhookCallback(`/bot${API_TOKEN}`));
+bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
+expressApp.use(bot.webhookCallback(`/bot${BOT_TOKEN}`));
 
 
 
