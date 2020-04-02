@@ -15,11 +15,13 @@ const port = process.env.PORT || 3000;
 //   expressApp.listen(port, () => {
 //     console.log(`Listening on port ${port}`)
 //   })
+const bot = new Telegraf(BOT_TOKEN);
+
 
 bot.telegram.setWebhook(`${URL}/bot${API_TOKEN}`);
 expressApp.use(bot.webhookCallback(`/bot${API_TOKEN}`));
 
-const bot = new Telegraf(BOT_TOKEN);
+
 
 bot.start(ctx => ctx.reply(`
 Добро пожаловать в COVID19 Bot!
