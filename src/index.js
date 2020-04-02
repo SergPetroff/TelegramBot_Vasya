@@ -9,17 +9,17 @@ const URL = process.env.URL || 'https://pumpkin-pie-87349.herokuapp.com/';
 
 const port = process.env.PORT || 3000;
 
-// expressApp.get('/', (req, res) => {
-//     res.send('Hello World!')
-//   })
-//   expressApp.listen(port, () => {
-//     console.log(`Listening on port ${port}`)
-//   })
+expressApp.get('/', (req, res) => {
+    res.send('Hello World!')
+  })
+  expressApp.listen(port, () => {
+    console.log(`Listening on port ${port}`)
+  })
 const bot = new Telegraf(BOT_TOKEN);
 
 
-bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
-expressApp.use(bot.webhookCallback(`/bot${BOT_TOKEN}`));
+// bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
+// expressApp.use(bot.webhookCallback(`/bot${BOT_TOKEN}`));
 
 
 
