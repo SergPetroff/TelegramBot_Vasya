@@ -5,15 +5,19 @@ const express = require('express');
 const expressApp = express();
 
 const BOT_TOKEN = process.env.BOT_TOKEN || "95669930:AAFufAdJdpOtMLRTUlzOM3twxLzBq-geZHE"
+const URL = process.env.URL || 'https://pumpkin-pie-87349.herokuapp.com/';
 
 const port = process.env.PORT || 3000;
 
-expressApp.get('/', (req, res) => {
-    res.send('Hello World!')
-  })
-  expressApp.listen(port, () => {
-    console.log(`Listening on port ${port}`)
-  })
+// expressApp.get('/', (req, res) => {
+//     res.send('Hello World!')
+//   })
+//   expressApp.listen(port, () => {
+//     console.log(`Listening on port ${port}`)
+//   })
+
+bot.telegram.setWebhook(`${URL}/bot${API_TOKEN}`);
+expressApp.use(bot.webhookCallback(`/bot${API_TOKEN}`));
 
 const bot = new Telegraf(BOT_TOKEN);
 
@@ -29,6 +33,7 @@ Germany`));
 
 bot.hears(/.*/, async ctx => {
     try {
+      console.log(ctx.message.text)
         const {data} = await covidService.getByCountry(ctx.message.text);
         if(data && data.results===0){
             return ctx.reply(`Страна не найдена`)
@@ -40,6 +45,22 @@ bot.hears(/.*/, async ctx => {
         console.log(`Error! ${e}`)
       }
 });
+// bot.on('text',async (ctx) =>{
+//   let query = ctx.update.message.text;
+//   try {
+    
+//     console.log(query)
+//       const {data} = await covidService.getByCountry(query);
+//       if(data && data.results===0){
+//           return ctx.reply(`Страна не найдена`)
+//       }
+//       console.log(`Country:${data.response[0].country}`)
+//       return ctx.replyWithMarkdown(formatCountryMsg(data.response[0])
+//       )
+//   }catch(e) {
+//       console.log(`Error! ${e}`)
+//     }
+// });
 bot.startPolling();
 
 // bot.launch().then(res =>{
