@@ -74,7 +74,7 @@ bot.hears(/\/weather (.+)/, async (ctx) => {
           return ctx.replyWithMarkdown(
             `Погода в *${params.query}*: *${weatherdata.current.temperature}* C, Скорость ветра: *${weatherdata.current.wind_speed}* км/ч,`);
         }else{
-          return ctx.reply(`Я не нашел такого города 😭` )
+          return ctx.reply(`Я не нашел такого города  *${params.query}* :cry:` )
         }
       }else{
         return ctx.reply(`Введите город`)
