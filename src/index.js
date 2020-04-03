@@ -6,13 +6,18 @@ const express = require('express');
 const expressApp = express();
 
 const BOT_TOKEN = process.env.BOT_TOKEN || "95669930:AAFufAdJdpOtMLRTUlzOM3twxLzBq-geZHE"
-const URL = process.env.URL || 'https://pumpkin-pie-87349.herokuapp.com/';
+const URL = process.env.URL || 'https://pumpkin-pie-87349.herokuapp.com';
 const  weatherservice_key = "8802edb4386b2aa0cb701ee80caaf778"
 
 const port = process.env.PORT || 3000;
 
 
 const bot = new Telegraf(BOT_TOKEN);
+
+
+console.log(`${URL}/bot${BOT_TOKEN}`)
+bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
+bot.startWebhook(`/bot${BOT_TOKEN}`, null, port)
 
 
 bot.start(ctx => ctx.reply(`
@@ -77,8 +82,7 @@ bot.hears(/\/weather (.+)/, async (ctx) => {
   }
 });
 
-bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
-bot.startWebhook(`/bot${BOT_TOKEN}`, null, port)
+
 
 //bot.startPolling();
 
