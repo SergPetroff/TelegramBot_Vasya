@@ -15,11 +15,6 @@ const port = process.env.PORT || 3000;
 const bot = new Telegraf(BOT_TOKEN);
 
 
-bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
-bot.startWebhook(`/bot${BOT_TOKEN}`, null, port)
-
-
-
 bot.start(ctx => ctx.reply(`
 Добро пожаловать в Vasya Bot!
 Я умею показывать статистику по заражению COVID19 а так же погоду по городам.
@@ -82,7 +77,8 @@ bot.hears(/\/weather (.+)/, async (ctx) => {
   }
 });
 
-
+bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
+bot.startWebhook(`/bot${BOT_TOKEN}`, null, port)
 
 //bot.startPolling();
 
