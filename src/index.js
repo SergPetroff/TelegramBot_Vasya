@@ -11,29 +11,27 @@ const  weatherservice_key = "8802edb4386b2aa0cb701ee80caaf778"
 
 const port = process.env.PORT || 3000;
 
-expressApp.get('/', (req, res) => {
-    res.send('Hello World!')
-  })
-  expressApp.listen(port, () => {
-    console.log(`Listening on port ${port}`)
-  })
+
 const bot = new Telegraf(BOT_TOKEN);
 
 
-// bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
-// expressApp.use(bot.webhookCallback(`/bot${BOT_TOKEN}`));
+bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
+bot.startWebhook(`/bot${BOT_TOKEN}`, null, port)
 
 
 
 bot.start(ctx => ctx.reply(`
-Добро пожаловать в COVID19 Bot!
-Вам нужно отправить название страны что бы получить статистику.
+Добро пожаловать в Vasya Bot!
+Я умею показывать статистику по заражению COVID19 а так же погоду по городам.
 `));
 
 bot.help(ctx => ctx.reply(`Например:
-Russia
-Spain
-Germany`));
+      /Russia
+      /Spain
+      /Germany
+      
+      Что бы получить погоду в городе введите: 
+      /London`));
 
 //Статистика по COVID19
   bot.hears(/\/country (.+)/, async (ctx) => {
