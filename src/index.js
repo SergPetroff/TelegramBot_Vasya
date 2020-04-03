@@ -84,7 +84,7 @@ bot.hears(/\/weather (.+)/, async (ctx) => {
 
 
 
-bot.startPolling();
+//bot.startPolling();
 
 // bot.launch().then(res =>{
 //     const date = new Date();
