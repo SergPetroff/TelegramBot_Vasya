@@ -70,11 +70,11 @@ bot.hears(/\/weather (.+)/, async (ctx) => {
           access_key: weatherservice_key,
           query:resp[1]
         }
-        const {weatherdata} = await weatherService.getByCity(params);
-        if(weatherdata && weatherdata.data){
+        const weatherdata = await weatherService.getByCity(params);
+        if(weatherdata && weatherdata.current){
 
-          return ctx.reply(
-            `Погода в ${params.query}: ${weatherdata.data.current.temperature} градусов C*, Скорость ветра: ${weatherdata.data.current.wind_speed} км/ч,`);
+          return ctx.replyWithMarkdown(
+            `Погода в *${params.query}*: *${weatherdata.current.temperature}* C, Скорость ветра: *${weatherdata.current.wind_speed}* км/ч,`);
         }
       }else{
         return ctx.reply(`Введите город`)
