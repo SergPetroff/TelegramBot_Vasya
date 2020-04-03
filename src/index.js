@@ -41,7 +41,7 @@ bot.help(ctx => ctx.reply(`Например:
       if(resp[1].length>2){
         const {data} = await covidService.getByCountry(resp[1]);
         if(data && data.results===0){
-            return ctx.reply(`Страна не найдена`)
+            return ctx.replyWithMarkdown(`Я не нашел такой страны  *${params.query}* 😢` )
         }
         console.log(`Country:${data.response[0].country}`)
         return ctx.replyWithMarkdown(formatCountryMsg(data.response[0])
@@ -72,7 +72,8 @@ bot.hears(/\/weather (.+)/, async (ctx) => {
         if(weatherdata && weatherdata.current){
 
           return ctx.replyWithMarkdown(
-            `Погода в *${params.query}*: *${weatherdata.current.temperature}* C, Скорость ветра: *${weatherdata.current.wind_speed}* км/ч,`);
+            `Температура в *${params.query}*: *${weatherdata.current.temperature}* ºC
+             Скорость ветра: *${weatherdata.current.wind_speed}* км/ч,`);
         }else{
           return ctx.replyWithMarkdown(`Я не нашел такого города  *${params.query}* 😢` )
         }
