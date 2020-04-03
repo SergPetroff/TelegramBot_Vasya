@@ -31,7 +31,7 @@ bot.help(ctx => ctx.reply(`Например:
       /Germany
       
       Что бы получить погоду в городе введите: 
-      /London`));
+      /weather London`));
 
 //Статистика по COVID19
   bot.hears(/\/country (.+)/, async (ctx) => {
@@ -73,6 +73,8 @@ bot.hears(/\/weather (.+)/, async (ctx) => {
 
           return ctx.replyWithMarkdown(
             `Погода в *${params.query}*: *${weatherdata.current.temperature}* C, Скорость ветра: *${weatherdata.current.wind_speed}* км/ч,`);
+        }else{
+          return ctx.reply(`Я не нашел такого города 😭` )
         }
       }else{
         return ctx.reply(`Введите город`)
