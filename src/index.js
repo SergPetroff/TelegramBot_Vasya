@@ -33,16 +33,24 @@ Russia
 Spain
 Germany`));
 
-bot.hears(/.*/, async ctx => {
+//bot.hears(/.*/, async ctx => {
+  bot.hears(/\/country (.+)/, async (ctx) => {
     try {
       console.log(ctx.message.text)
-        const {data} = await covidService.getByCountry(ctx.message.text);
+      var resp = ctx.message.text.split(" ");
+      if(resp[1].length>2){
+        const {data} = await covidService.getByCountry(resp[1]);
         if(data && data.results===0){
             return ctx.reply(`Страна не найдена`)
         }
         console.log(`Country:${data.response[0].country}`)
         return ctx.replyWithMarkdown(formatCountryMsg(data.response[0])
         )
+
+      }else{
+        return ctx.reply(`Введите страну`)
+      }
+        
     }catch(e) {
         console.log(`Error! ${e}`)
       }
@@ -63,9 +71,9 @@ bot.hears(/.*/, async ctx => {
 //       console.log(`Error! ${e}`)
 //     }
 // });
-//bot.startPolling();
+bot.startPolling();
 
-bot.launch().then(res =>{
-    const date = new Date();
-    console.log(`Bot launched at ${date}`)
-}).catch(err => console.log(`Bot error: ${err}`));
+// bot.launch().then(res =>{
+//     const date = new Date();
+//     console.log(`Bot launched at ${date}`)
+// }).catch(err => console.log(`Bot error: ${err}`));
