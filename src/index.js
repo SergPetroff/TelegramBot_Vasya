@@ -74,7 +74,7 @@ const showWeatherInfo = async (ctx) =>{
   console.log(`Error! ${e}`)
 }
 }
-const sendCovidINfo = async (ctx)=>{
+const sendCovidINfo = async (ctx, wizard= false)=>{
   try {
     console.log(ctx.message.text)
     var resp = ctx.message.text.split(" ");
@@ -82,6 +82,9 @@ const sendCovidINfo = async (ctx)=>{
       const {data} = await covidService.getByCountry(resp[1]);
       if(data && data.results===0){
           return ctx.replyWithMarkdown(`Я не нашел такой страны  *${params.query}* 😢` )
+          if(wizard){
+
+          }
       }
       console.log(`Country:${data.response[0].country}`)
       return ctx.replyWithMarkdown(formatCountryMsg(data.response[0])
@@ -131,11 +134,11 @@ const superWizard = new WizardScene('super-wizard',
         if(ctx.wizard.state.data.choice==='covid'){
           ctx.reply(`Вы выбрали covid, страна:${ctx.message.text}`)
           await sendCovidINfo(ctx)
-          return ctx.scene.leave()
+         // return ctx.scene.leave()
         }else if(ctx.wizard.state.data.choice==='weather'){
           ctx.reply(`Вы выбрали weather, город:${ctx.message.text}`)
           await showWeatherInfo(ctx)
-          return ctx.scene.leave()
+         // return ctx.scene.leave()
         }
         
     }
