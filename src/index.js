@@ -38,17 +38,17 @@ bot.help(ctx => ctx.reply(`Например:
       /weather London`));
 
 //Статистика по COVID19
-  bot.hears(/\/country (.+)/, async (ctx) => {
+  bot.hears(/\/country (.+)/, (ctx) => {
     sendCovidINfo(ctx)
 });
 
 
 //Погода
-bot.hears(/\/weather (.+)/, async (ctx) => { 
+bot.hears(/\/weather (.+)/, (ctx) => { 
   showWeatherInfo(ctx)
 });
 
-const showWeatherInfo = (ctx) =>{
+const showWeatherInfo = async (ctx) =>{
   try {
     console.log(ctx.message.text)
     var resp = ctx.message.text.split(" ");
@@ -74,7 +74,7 @@ const showWeatherInfo = (ctx) =>{
   console.log(`Error! ${e}`)
 }
 }
-const sendCovidINfo = (ctx)=>{
+const sendCovidINfo = async (ctx)=>{
   try {
     console.log(ctx.message.text)
     var resp = ctx.message.text.split(" ");
