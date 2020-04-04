@@ -38,25 +38,25 @@ bot.help(ctx => ctx.reply(`Например:
       /weather London`));
 
 //Статистика по COVID19
-  bot.hears(/\/country (.+)/, async (ctx) => {
-    await sendCovidINfo(ctx)
-});
+//   bot.hears(/\/country (.+)/, async (ctx) => {
+//     await sendCovidINfo(ctx)
+// });
 
 
 //Погода
-bot.hears(/\/weather (.+)/,async (ctx) => { 
-  await showWeatherInfo(ctx)
-});
+// bot.hears(/\/weather (.+)/,async (ctx) => { 
+//   await showWeatherInfo(ctx)
+// });
 
 const showWeatherInfo = async (ctx) =>{
   try {
     console.log(ctx.message.text)
-    var resp = ctx.message.text.split(" ");
+    var resp = ctx.message.text
    
-    if(resp[1].length>2){
+    if(ctx.message.text.length>2){
       const params = {
         access_key: weatherservice_key,
-        query:resp[1]
+        query:resp
       }
       const weatherdata = await weatherService.getByCity(params);
       if(weatherdata && weatherdata.current){
@@ -74,12 +74,12 @@ const showWeatherInfo = async (ctx) =>{
   console.log(`Error! ${e}`)
 }
 }
-const sendCovidINfo = async (ctx, wizard= false)=>{
+const sendCovidINfo = async (ctx)=>{
   try {
     console.log(ctx.message.text)
-    var resp = ctx.message.text.split(" ");
-    if(resp[1].length>2){
-      const {data} = await covidService.getByCountry(resp[1]);
+    var resp = ctx.message.text
+    if(resp.length>2){
+      const {data} = await covidService.getByCountry(resp);
       if(data && data.results===0){
           return ctx.replyWithMarkdown(`Я не нашел такой страны  *${params.query}* 😢` )
           
@@ -88,9 +88,6 @@ const sendCovidINfo = async (ctx, wizard= false)=>{
       return ctx.replyWithMarkdown(formatCountryMsg(data.response[0])
       )
 
-      if(wizard){
-        ctx.scene.leave()
-      }
 
     }else{
       return ctx.reply(`Введите страну`)
@@ -113,6 +110,7 @@ stepHandler.action('covid_wiz', (ctx) => {
   return ctx.wizard.next()
 })
 stepHandler.action('weather', (ctx) => {
+  ctx.wizard.state.data = {};
     ctx.wizard.state.data.choice = "weather"
   ctx.reply('Введите город на англ языке, пример: Moscow')
   //console.log(`Weather: ${ctx.message.text}`)
@@ -136,15 +134,13 @@ const superWizard = new WizardScene('super-wizard',
         // ctx.reply(`Вы ввели:${ctx.message.text}
         // Выбор юзера:${ctx.wizard.state.data.choice}`)
         if(ctx.wizard.state.data.choice==='covid'){
-          ctx.reply(`Вы выбрали covid, страна:${ctx.message.text}`)
-          await sendCovidINfo(ctx,true)
-          //await  ctx.scene.leave()
+          //ctx.reply(`Вы выбрали covid, страна:${ctx.message.text}`)
+          await sendCovidINfo(ctx)
         }else if(ctx.wizard.state.data.choice==='weather'){
-          ctx.reply(`Вы выбрали weather, город:${ctx.message.text}`)
-          await showWeatherInfo(ctx,true)
-          //await ctx.scene.leave()
+         //ctx.reply(`Вы выбрали weather, город:${ctx.message.text}`)
+          await showWeatherInfo(ctx)
         }
-        
+        ctx.scene.leave()
     }
 )
 
@@ -160,6 +156,8 @@ bot.hears(/вася/gi, (ctx)=>{
   console.log(`${URL}/bot${BOT_TOKEN}`)
 bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
 bot.startWebhook(`/bot${BOT_TOKEN}`, null, port)
+
+//bot.launch()
 
 //bot.startPolling();
 
