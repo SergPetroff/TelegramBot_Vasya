@@ -129,11 +129,15 @@ const superWizard = new WizardScene('super-wizard',
         // ctx.reply(`Вы ввели:${ctx.message.text}
         // Выбор юзера:${ctx.wizard.state.data.choice}`)
         if(ctx.wizard.state.data.choice==='covid'){
+          ctx.reply(`Вы выбрали covid, страна:${ctx.message.text}`)
           await sendCovidINfo(ctx)
+          return ctx.scene.leave()
         }else if(ctx.wizard.state.data.choice==='weather'){
+          ctx.reply(`Вы выбрали weather, город:${ctx.message.text}`)
           await showWeatherInfo(ctx)
+          return ctx.scene.leave()
         }
-        return ctx.scene.leave()
+        
     }
 )
 
