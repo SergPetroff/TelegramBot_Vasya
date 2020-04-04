@@ -2,8 +2,14 @@ const Telegraf = require('telegraf');
 const covidService = require("./services/covid");
 const weatherService = require("./services/weather");
 const formatCountryMsg = require("./messages/country");
-const express = require('express');
-const expressApp = express();
+
+const Composer = require('telegraf/composer')
+const session = require('telegraf/session')
+const Stage = require('telegraf/stage')
+const Markup = require('telegraf/markup')
+const WizardScene = require('telegraf/scenes/wizard')
+
+
 
 const BOT_TOKEN = process.env.BOT_TOKEN || "95669930:AAFufAdJdpOtMLRTUlzOM3twxLzBq-geZHE"
 const URL = process.env.URL || 'https://pumpkin-pie-87349.herokuapp.com';
@@ -12,12 +18,10 @@ const  weatherservice_key = "8802edb4386b2aa0cb701ee80caaf778"
 const port = process.env.PORT || 3000;
 
 
-const bot = new Telegraf(BOT_TOKEN);
+const bot = new Telegraf(BOT_TOKEN);  
 
 
-console.log(`${URL}/bot${BOT_TOKEN}`)
-bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
-bot.startWebhook(`/bot${BOT_TOKEN}`, null, port)
+
 
 
 bot.start(ctx => ctx.reply(`
@@ -35,57 +39,116 @@ bot.help(ctx => ctx.reply(`Например:
 
 //Статистика по COVID19
   bot.hears(/\/country (.+)/, async (ctx) => {
-    try {
-      console.log(ctx.message.text)
-      var resp = ctx.message.text.split(" ");
-      if(resp[1].length>2){
-        const {data} = await covidService.getByCountry(resp[1]);
-        if(data && data.results===0){
-            return ctx.replyWithMarkdown(`Я не нашел такой страны  *${params.query}* 😢` )
-        }
-        console.log(`Country:${data.response[0].country}`)
-        return ctx.replyWithMarkdown(formatCountryMsg(data.response[0])
-        )
-
-      }else{
-        return ctx.reply(`Введите страну`)
-      }
-        
-    }catch(e) { 
-        console.log(`Error! ${e}`)
-      }
+    sendCovidINfo(ctx)
 });
 
 
 //Погода
 bot.hears(/\/weather (.+)/, async (ctx) => { 
-  try {
-      console.log(ctx.message.text)
-      var resp = ctx.message.text.split(" ");
-     
-      if(resp[1].length>2){
-        const params = {
-          access_key: weatherservice_key,
-          query:resp[1]
-        }
-        const weatherdata = await weatherService.getByCity(params);
-        if(weatherdata && weatherdata.current){
-
-          return ctx.replyWithMarkdown(
-            `Температура в *${params.query}*: *${weatherdata.current.temperature}* ºC
-             Скорость ветра: *${weatherdata.current.wind_speed}* км/ч,`);
-        }else{
-          return ctx.replyWithMarkdown(`Я не нашел такого города  *${params.query}* 😢` )
-        }
-      }else{
-        return ctx.reply(`Введите город`)
-      }
-  }catch(e){
-    console.log(`Error! ${e}`)
-  }
+  showWeatherInfo(ctx)
 });
 
+const showWeatherInfo = (ctx) =>{
+  try {
+    console.log(ctx.message.text)
+    var resp = ctx.message.text.split(" ");
+   
+    if(resp[1].length>2){
+      const params = {
+        access_key: weatherservice_key,
+        query:resp[1]
+      }
+      const weatherdata = await weatherService.getByCity(params);
+      if(weatherdata && weatherdata.current){
 
+        return ctx.replyWithMarkdown(
+          `Температура в *${params.query}*: *${weatherdata.current.temperature}* ºC
+           Скорость ветра: *${weatherdata.current.wind_speed}* км/ч,`);
+      }else{
+        return ctx.replyWithMarkdown(`Я не нашел такого города  *${params.query}* 😢` )
+      }
+    }else{
+      return ctx.reply(`Введите город`)
+    }
+}catch(e){
+  console.log(`Error! ${e}`)
+}
+}
+const sendCovidINfo = (ctx)=>{
+  try {
+    console.log(ctx.message.text)
+    var resp = ctx.message.text.split(" ");
+    if(resp[1].length>2){
+      const {data} = await covidService.getByCountry(resp[1]);
+      if(data && data.results===0){
+          return ctx.replyWithMarkdown(`Я не нашел такой страны  *${params.query}* 😢` )
+      }
+      console.log(`Country:${data.response[0].country}`)
+      return ctx.replyWithMarkdown(formatCountryMsg(data.response[0])
+      )
+
+    }else{
+      return ctx.reply(`Введите страну`)
+    }
+      
+  }catch(e) { 
+      console.log(`Error! ${e}`)
+    }
+}
+//Wizard
+const stepHandler = new Composer()
+
+
+stepHandler.action('covid_wiz', (ctx) => {
+    ctx.wizard.state.data = {};
+    ctx.wizard.state.data.choice = "covid"
+  ctx.reply('Шаг2 введите страну на англ языке, пример: Russia')  
+  return ctx.wizard.next()
+})
+stepHandler.action('weather', (ctx) => {
+    ctx.wizard.state.data.choice = "weather"
+  ctx.reply('Введите город на англ языке, пример: Moscow')
+  //console.log(`Weather: ${ctx.message.text}`)
+  return ctx.wizard.next()
+})
+stepHandler.use((ctx) => ctx.replyWithMarkdown('Press `Next` button or type /next'))
+
+const superWizard = new WizardScene('super-wizard',
+    (ctx) => {
+        ctx.reply('Жми кнопку', 
+        Markup.inlineKeyboard([
+            Markup.callbackButton("😷 Китайская вирусня", "covid_wiz"),
+            Markup.callbackButton("🌦 Погода", "weather")
+          ]).extra()
+        )
+        return ctx.wizard.next()
+
+    },
+    stepHandler,
+    (ctx) => {
+        ctx.reply(`Вы ввели:${ctx.message.text}
+        Выбор юзера:${ctx.wizard.state.data.choice}`)
+        if(ctx.wizard.state.data.choice==='covid'){
+          sendCovidINfo(ctx)
+        }else if(ctx.wizard.state.data.choice==='weather'){
+          console.log()
+        }
+        return ctx.scene.leave()
+    }
+)
+
+const stage = new Stage([superWizard])
+
+bot.use(session())
+bot.use(stage.middleware())
+bot.hears(/вася/gi, (ctx)=>{
+    Stage.enter('super-wizard')(ctx)
+  })
+
+
+  console.log(`${URL}/bot${BOT_TOKEN}`)
+bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
+bot.startWebhook(`/bot${BOT_TOKEN}`, null, port)
 
 //bot.startPolling();
 
