@@ -24,18 +24,13 @@ const bot = new Telegraf(BOT_TOKEN);
 
 
 
-bot.start(ctx => ctx.reply(`
-Добро пожаловать в Vasya Bot!
+bot.start(ctx => ctx.replyWithMarkdown(`
+Добро пожаловать  *${ctx.from.first_name}* в Vasya Bot!
 Я умею показывать статистику по заражению COVID19 а так же погоду по городам.
 `));
 
-bot.help(ctx => ctx.reply(`Например:
-      /Russia
-      /Spain
-      /Germany
-      
-      Что бы получить погоду в городе введите: 
-      /weather London`));
+bot.help(ctx => ctx.replyWithMarkdown(`
+Привет *${ctx.from.first_name}*, что бы вызвать бота, напиши вася`));
 
 //Статистика по COVID19
 //   bot.hears(/\/country (.+)/, async (ctx) => {
@@ -120,7 +115,7 @@ stepHandler.use((ctx) => ctx.replyWithMarkdown('Press `Next` button or type /nex
 
 const superWizard = new WizardScene('super-wizard',
     (ctx) => {
-        ctx.reply('Жми кнопку', 
+        ctx.replyWithMarkdown(`Жми кнопку *${ctx.from.first_name}*`, 
         Markup.inlineKeyboard([
             Markup.callbackButton("😷 Китайская вирусня", "covid_wiz"),
             Markup.callbackButton("🌦 Погода", "weather")
