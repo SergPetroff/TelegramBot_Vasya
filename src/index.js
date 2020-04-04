@@ -38,14 +38,14 @@ bot.help(ctx => ctx.reply(`Например:
       /weather London`));
 
 //Статистика по COVID19
-  bot.hears(/\/country (.+)/, (ctx) => {
-    sendCovidINfo(ctx)
+  bot.hears(/\/country (.+)/, async (ctx) => {
+    await sendCovidINfo(ctx)
 });
 
 
 //Погода
-bot.hears(/\/weather (.+)/, (ctx) => { 
-  showWeatherInfo(ctx)
+bot.hears(/\/weather (.+)/,async (ctx) => { 
+  await showWeatherInfo(ctx)
 });
 
 const showWeatherInfo = async (ctx) =>{
