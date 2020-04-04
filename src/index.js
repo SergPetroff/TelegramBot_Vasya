@@ -137,11 +137,11 @@ const superWizard = new WizardScene('super-wizard',
         // Выбор юзера:${ctx.wizard.state.data.choice}`)
         if(ctx.wizard.state.data.choice==='covid'){
           ctx.reply(`Вы выбрали covid, страна:${ctx.message.text}`)
-          await sendCovidINfo(ctx)
+          await sendCovidINfo(ctx,true)
           //await  ctx.scene.leave()
         }else if(ctx.wizard.state.data.choice==='weather'){
           ctx.reply(`Вы выбрали weather, город:${ctx.message.text}`)
-          await showWeatherInfo(ctx)
+          await showWeatherInfo(ctx,true)
           //await ctx.scene.leave()
         }
         
