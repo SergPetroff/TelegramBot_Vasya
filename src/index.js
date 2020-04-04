@@ -102,7 +102,7 @@ const stepHandler = new Composer()
 stepHandler.action('covid_wiz', (ctx) => {
     ctx.wizard.state.data = {};
     ctx.wizard.state.data.choice = "covid"
-  ctx.reply('Шаг2 введите страну на англ языке, пример: Russia')  
+  ctx.reply('Введите страну на англ языке, пример: Russia')  
   return ctx.wizard.next()
 })
 stepHandler.action('weather', (ctx) => {
@@ -125,13 +125,13 @@ const superWizard = new WizardScene('super-wizard',
 
     },
     stepHandler,
-    (ctx) => {
-        ctx.reply(`Вы ввели:${ctx.message.text}
-        Выбор юзера:${ctx.wizard.state.data.choice}`)
+    async (ctx) => {
+        // ctx.reply(`Вы ввели:${ctx.message.text}
+        // Выбор юзера:${ctx.wizard.state.data.choice}`)
         if(ctx.wizard.state.data.choice==='covid'){
-          sendCovidINfo(ctx)
+          await sendCovidINfo(ctx)
         }else if(ctx.wizard.state.data.choice==='weather'){
-          console.log()
+          await showWeatherInfo(ctx)
         }
         return ctx.scene.leave()
     }
