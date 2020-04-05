@@ -1,7 +1,7 @@
 const axios = require("axios");
-let service = {};
+const formatCountryMsg = require("../messages/country");
 
-service.getByCountry = (country) => {
+const getByCountry = (country) => {
     return axios({
         "method": "GET",
         "url": "https://covid-193.p.rapidapi.com/statistics",
@@ -16,4 +16,31 @@ service.getByCountry = (country) => {
 }
 
 
-module.exports = service;
+const sendCovidINfo = async (ctx)=>{
+    try {
+      console.log(ctx.message.text)
+      const resptext = ctx.message.text
+      var text=resptext.split("/").length===2?resptext.split("/")[1]:resptext
+      if(text.length>2){
+        const {data} = await getByCountry(text);
+        if(data && data.results===0){
+            return ctx.replyWithMarkdown(`Я не нашел страны  *${params.query}* 😢` )
+            
+        }
+        //console.log(`Country:${data.response[0].country}`)
+        return ctx.replyWithMarkdown(formatCountryMsg(data.response[0])
+        )
+  
+  
+      }else{
+        return ctx.reply(`Введите страну`)
+      }
+  
+      
+        
+    }catch(e) { 
+        console.log(`Error! ${e}`)
+      }
+  }
+
+module.exports = sendCovidINfo;
