@@ -24,7 +24,7 @@ const sendCovidINfo = async (ctx)=>{
       if(text.length>2){
         const {data} = await getByCountry(text);
         if(data && data.results===0){
-            return ctx.replyWithMarkdown(`Я не нашел страны  *${params.query}* 😢` )
+            return ctx.replyWithMarkdown(`Я не нашел страны  *${text}* 😢` )
             
         }
         //console.log(`Country:${data.response[0].country}`)
