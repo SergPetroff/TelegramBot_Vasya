@@ -25,8 +25,11 @@ bot.start(ctx => ctx.replyWithMarkdown(`
 Я умею показывать статистику по заражению COVID19 а так же погоду по городам.
 `));
 
-bot.help(ctx => ctx.replyWithMarkdown(`
-Привет *${ctx.from.first_name}*, что бы вызвать бота, напиши вася`));
+bot.help(ctx => {
+  
+  ctx.replyWithMarkdown(`
+Привет *${ctx.from.first_name}*, что бы вызвать бота, напиши вася`)}
+);
 
 //Статистика по COVID19
 //   bot.hears(/\/country (.+)/, async (ctx) => {
