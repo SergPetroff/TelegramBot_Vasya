@@ -14,7 +14,7 @@ const stepHandler = new Composer()
 stepHandler.action('covid_wiz', (ctx) => {
     ctx.wizard.state.data = {};
     ctx.wizard.state.data.choice = "covid"
-  ctx.replyWithMarkdown(`Введи страну на англ языке, пример: Italy (если в группе то /Italy)`)
+  ctx.replyWithMarkdown(`Введи страну на англ языке, пример: Russia (если в группе то /Russia)`)
   // Markup.inlineKeyboard([
   //   Markup.callbackButton("🇷🇺 Россия", "getDefaultCovid"),
   // ]).extra())  
@@ -27,7 +27,7 @@ stepHandler.action('covid_wiz', (ctx) => {
 stepHandler.action('weather', (ctx) => {
   ctx.wizard.state.data = {};
     ctx.wizard.state.data.choice = "weather"
-  ctx.reply('Введите город на англ языке, пример: Moscow')
+  ctx.reply('Введите город на англ языке, пример: Moscow (если в группе то /Moscow)')
   //console.log(`Weather: ${ctx.message.text}`)
   return ctx.wizard.next()
 })
