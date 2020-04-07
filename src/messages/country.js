@@ -6,10 +6,10 @@ module.exports = (data)=>{
     🦠 Новые случаи: *${data.cases.new?data.cases.new:"н/д"}*
     💊 Всего сейчас: *${data.cases.active}*
     👍 Вылечились: *${data.cases.recovered}*
-    🤮 В крит.состоянии: *${data.cases.critical}*
-    💀 Смертей: *${data.deaths.total}*
+    🤮 В крит.состоянии: *${data.cases.critical?data.cases.critical:"н/д"}*
+    💀 Смертей: *${data.deaths.total?data.deaths.total:"н/д"}*
     --------------------------
-    🧪 Сделано тестов: *${data.tests.total}*
+    🧪 Сделано тестов: *${data.tests.total?data.tests.total:"н/д"}*
     🚑 Всего заражений: *${data.cases.total}*
     `
 }

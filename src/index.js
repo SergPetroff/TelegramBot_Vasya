@@ -17,9 +17,6 @@ const port = process.env.PORT || 3000;
 const bot = new Telegraf(BOT_TOKEN);  
 
 
-
-
-
 bot.start(ctx => ctx.replyWithMarkdown(`
 Добро пожаловать  *${ctx.from.first_name}* в Vasya Bot!
 Я умею показывать статистику по заражению COVID19 а так же погоду по городам.
@@ -31,16 +28,6 @@ bot.help(ctx => {
 Привет *${ctx.from.first_name}*, что бы вызвать бота, напиши вася`)}
 );
 
-//Статистика по COVID19
-//   bot.hears(/\/country (.+)/, async (ctx) => {
-//     await sendCovidINfo(ctx)
-// });
-
-
-//Погода
-// bot.hears(/\/weather (.+)/,async (ctx) => { 
-//   await showWeatherInfo(ctx)
-// });
 
 
 //Wizard
