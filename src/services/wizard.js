@@ -41,7 +41,7 @@ stepHandler.action('weather', (ctx) => {
   return ctx.wizard.next()
 })
 
-stepHandler.action('changeMoney', (ctx) => {
+stepHandler.action('changeMoney', async (ctx) => {
  /*  ctx.wizard.state.data = {};
     ctx.wizard.state.data.choice = "changeMoney"
   ctx.reply('Скоро здесь будет курс валют') */
