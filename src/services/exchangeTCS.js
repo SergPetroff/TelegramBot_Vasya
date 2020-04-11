@@ -12,7 +12,7 @@ const getDataFromTCSAPI = async (params) => {
                 let eurrub = allrub.find(itemfind=>{return itemfind.fromCurrency.name==="EUR"})
                 eurrub.spread = Math.round(((eurrub.sell-eurrub.buy)/usdrub.sell)*100)
                 let gbprub = allrub.find(itemfind=>{return itemfind.fromCurrency.name==="GBP"})
-                eurrub.gbprub = Math.round(((gbprub.sell-gbprub.buy)/gbprub.sell)*100)
+                gbprub.gbprub = Math.round(((gbprub.sell-gbprub.buy)/gbprub.sell)*100)
 
                 return {
                     usdrub,
