@@ -4,7 +4,8 @@ const WizardScene = require('telegraf/scenes/wizard')
 const covidService = require('./covid')
 const countryEmoji = require("country-emoji");
 const showWeatherInfo =require('./weather')
-const showExchangeTCS = require('./exchangeTCS')
+const showExchangeTCS = require('./rateCurTCS')
+const rateCurCBR= require('./rateCurCBR')
 const stepHandler = new Composer()
 
 stepHandler.action('covid_wiz',async (ctx) => {
@@ -42,11 +43,9 @@ stepHandler.action('weather', (ctx) => {
 })
 
 stepHandler.action('changeMoney', async (ctx) => {
- /*  ctx.wizard.state.data = {};
-    ctx.wizard.state.data.choice = "changeMoney"
-  ctx.reply('Скоро здесь будет курс валют') */
-  //console.log(`Weather: ${ctx.message.text}`)
   const dataExchng = await showExchangeTCS()
+  const rateCBR = await rateCurCBR()
+  ctx.replyWithHTML(rateCBR)
   ctx.replyWithHTML(dataExchng)
   ctx.scene.leave()
 })
