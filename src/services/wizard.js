@@ -63,7 +63,7 @@ const superWizard = new WizardScene('super-wizard',
         ctx.replyWithMarkdown(`Жми кнопку *${ctx.from.first_name}*`, 
         Markup.inlineKeyboard([
             [Markup.callbackButton("🌦 Погода", "weather"),
-            Markup.callbackButton("💱 Курс валют", "changeMoney")],
+            Markup.callbackButton("💶 Курс валют", "changeMoney")],
             [Markup.callbackButton("😷 Китайская вирусня", "covid_wiz")]
           ]).extra()
         )

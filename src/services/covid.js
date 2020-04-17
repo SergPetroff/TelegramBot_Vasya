@@ -23,6 +23,7 @@ covidService.InfoOnCountry = async (country)=>{
             return ctx.replyWithMarkdown(`Я не нашел страны  *${text}* 😢` )
             
         }
+        console.log(data.response[0])
         return formatCountryMsg(data.response[0])
   
   
