@@ -2,7 +2,7 @@ const WizardScene = require('telegraf/scenes/wizard')
 const covidService = require('../services/covid')
 const covidFindWiz = new WizardScene('find-covid',
     (ctx) => {
-        ctx.reply("Ведите страну, например: Turkey");
+        ctx.reply("Введи страну на англ языке, пример: Turkey (в группе /Turkey)");
 
         //Necessary for store the input
        // ctx.scene.session.user = {};

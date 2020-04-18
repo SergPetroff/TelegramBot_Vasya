@@ -2,7 +2,7 @@ const WizardScene = require('telegraf/scenes/wizard')
 const showWeatherInfo =require('../services/weather')
 const findCityWeather = new WizardScene('find-Weather',
     (ctx) => {
-        ctx.reply("Ведите город, например: Berlin");
+        ctx.reply("Введите город на англ языке, пример: Moscow (в группе /Moscow");
 
         //Necessary for store the input
        // ctx.scene.session.user = {};
