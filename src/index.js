@@ -123,16 +123,16 @@ bot.action('changeMoney',async (ctx, next) => {
   next()
 })
 
-
-// console.log(`Run app on url: ${URL}/bot${BOT_TOKEN}`)
-// bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
-// bot.startWebhook(`/bot${BOT_TOKEN}`, null, port)
+console.log(`env: ${process.env.NODE_ENV}`)
+console.log(`Run app on url: ${URL}/bot${BOT_TOKEN}`)
+bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
+bot.startWebhook(`/bot${BOT_TOKEN}`, null, port)
 
 //bot.launch()
 
 //bot.startPolling();
 
-console.log(`env: ${process.env.NODE_ENV}`)
+
 bot.launch().then(res =>{
     const date = new Date();
     console.log(`Bot launched at ${date}`)
