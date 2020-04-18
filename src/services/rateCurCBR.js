@@ -21,7 +21,6 @@ const getDataFromCBR = async ()=>{
                         return {'Code':itemmap.CharCode[0],
                                 'Value':itemmap.Value[0]}
                             })
-                    console.log(resultValute);
                     resultValute.push({'Code':'Date','Value': result.ValCurs.$.Date})
                     return resultValute
                   })
