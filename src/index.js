@@ -132,9 +132,6 @@ console.log(`Run app on url: ${URL}/bot${BOT_TOKEN}`)
 bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
 bot.startWebhook(`/bot${BOT_TOKEN}`, null, port)
 
-bot.launch()
-
-bot.startPolling();
 
 
 // bot.launch().then(res =>{
