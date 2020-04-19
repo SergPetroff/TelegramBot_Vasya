@@ -20,7 +20,6 @@ const covidFindWiz = new WizardScene('find-covid',
         }
         const strmess = ctx.message.text.split("/").length===2?ctx.message.text.split("/")[1]:ctx.message.text
 
-        console.log(strmess)
         //Store the entered name
         const infoCovid=  await covidService.InfoOnCountry(strmess)
         ctx.replyWithMarkdown(`${infoCovid}`)

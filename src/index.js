@@ -73,7 +73,7 @@ bot.action('covid_wiz',async (ctx, next) => {
 
   //Собираем массив кнопок
    const markupbtn = covidStat.map(cntr => {
-    return Markup.callbackButton(`${countryEmoji.flag(cntr.country)} ${cntr.country}`,cntr.country)
+    return Markup.callbackButton(`${countryEmoji.flag(cntr.country)} ${cntr.country}`,"getCovidCountry")
    });
    //Добавляем кнопку поиска по названию
    markupbtn.push(Markup.callbackButton("🔎 Поиск по названию","findCovidCountry"))
@@ -84,6 +84,10 @@ bot.action('covid_wiz',async (ctx, next) => {
     `,
      Markup.inlineKeyboard([markupbtn.slice(0,2),markupbtn.slice(2,4),markupbtn.slice(4,6), markupbtn.slice(6,7)]).extra())  
   next()
+})
+
+bot.action("getCovidCountry", (ctx,next)=>{
+  return ctx.answerCbQuery(`Oh, ${ctx.match[0]}! Great choice`)
 })
 
 bot.action("findCovidCountry", (ctx,next)=>{
@@ -128,12 +132,12 @@ console.log(`Run app on url: ${URL}/bot${BOT_TOKEN}`)
 bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
 bot.startWebhook(`/bot${BOT_TOKEN}`, null, port)
 
-//bot.launch()
+bot.launch()
 
-//bot.startPolling();
+bot.startPolling();
 
 
-bot.launch().then(res =>{
-    const date = new Date();
-    console.log(`Bot launched at ${date}`)
-}).catch(err => console.log(`Bot error: ${err}`));
+// bot.launch().then(res =>{
+//     const date = new Date();
+//     console.log(`Bot launched at ${date}`)
+// }).catch(err => console.log(`Bot error: ${err}`));
