@@ -47,7 +47,7 @@ bot.help(ctx => {
 const defaultbtn =  Markup.inlineKeyboard([
   [Markup.callbackButton("🌦 Погода", "weather"),
   Markup.callbackButton("💶 Курс валют", "changeMoney")],
-  [Markup.callbackButton("😷 Китайская вирусня", "covid_wiz")]
+  [Markup.callbackButton("🦠 COVID-19", "covid_wiz")]
 ]
 ).extra()
 
@@ -73,17 +73,25 @@ bot.action('covid_wiz',async (ctx, next) => {
    const covidStat = await covidService.Statistic()
 
   //Собираем массив кнопок
-   const markupbtn = covidStat.map(cntr => {
-    return Markup.callbackButton(`${countryEmoji.flag(cntr.country)} ${cntr.country}`,"getCovidCountry")
+  let topCountryMsg =""
+   const topcoutry = covidStat.forEach(cntr => {
+  
+    topCountryMsg= topCountryMsg+ `${countryEmoji.flag(cntr.country)} *${cntr.country}* новые: *${cntr.cases.new?cntr.cases.new:'н/д'}*, всего: *${cntr.cases.total}*
+      `
+    
+     //Markup.callbackButton(`${countryEmoji.flag(cntr.country)} ${cntr.country}`,"getCovidCountry")
    });
    //Добавляем кнопку поиска по названию
-   markupbtn.push(Markup.callbackButton("🔎 Поиск по названию","findCovidCountry"))
-
+  // markupbtn.push(Markup.callbackButton("🔎 Поиск по названию","findCovidCountry"))
+console.log(topCountryMsg)
   ctx.replyWithMarkdown(`
       ${rusinfo}
       ⬇️ TOP стран по заражениям ⬇️
+
+      ${topCountryMsg}
     `,
-     Markup.inlineKeyboard([markupbtn.slice(0,2),markupbtn.slice(2,4),markupbtn.slice(4,6), markupbtn.slice(6,7)]).extra())  
+    Markup.inlineKeyboard([Markup.callbackButton("🔎 Поиск по названию","findCovidCountry")]).extra())  
+     //Markup.inlineKeyboard([markupbtn.slice(0,2),markupbtn.slice(2,4),markupbtn.slice(4,6), markupbtn.slice(6,7)]).extra())  
   next()
 })
 
