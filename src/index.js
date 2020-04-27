@@ -37,7 +37,8 @@ bot.start(ctx => ctx.replyWithMarkdown(`
 bot.help(ctx => {
   
   ctx.replyWithMarkdown(`
-Привет *${ctx.from.first_name}*, что бы вызвать бота, напиши вася`)}
+Привет *${ctx.from.first_name}*, что бы вызвать бота, напиши вася`)
+}
 );
 
 
@@ -123,18 +124,27 @@ bot.action('changeMoney',async (ctx, next) => {
   ctx.replyWithHTML(dataExchng)
 
   const dataCrypto = await rateCrypto()
-  ctx.replyWithMarkdown(dataCrypto)
+  console.log(dataCrypto)
+  ctx.replyWithHTML(dataCrypto)
   next()
 })
 
 console.log(`env: ${process.env.NODE_ENV}`)
-console.log(`Run app on url: ${URL}/bot${BOT_TOKEN}`)
-bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
-bot.startWebhook(`/bot${BOT_TOKEN}`, null, port)
+if(process.env.NODE_ENV==='production'){
+  
+  console.log(`Run app on url: ${URL}/bot${BOT_TOKEN}`)
+  bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
+  bot.startWebhook(`/bot${BOT_TOKEN}`, null, port)
+}else{
+
+  bot.launch().then(res =>{
+    const date = new Date();
+    console.log(`Bot launched at ${date}`)
+}).catch(err => console.log(`Bot error: ${err}`));
+
+}
 
 
 
-// bot.launch().then(res =>{
-//     const date = new Date();
-//     console.log(`Bot launched at ${date}`)
-// }).catch(err => console.log(`Bot error: ${err}`));
+
+

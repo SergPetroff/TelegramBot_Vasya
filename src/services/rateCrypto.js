@@ -7,11 +7,12 @@ const getDataCrypto = async () =>{
             if(responseapi.data){
                
                return `
-                *Курс BTC на бирже Bitstamp:* 
-                last: *${responseapi.data.last} usd*, 
-                high: *${responseapi.data.high} usd*, 
-                low: *${responseapi.data.low} usd*
+<b>BTC на Bitstamp</b> 
+    last: <b>${responseapi.data.last} $</b> , 
+    high: <b>${responseapi.data.high} $</b> , 
+    low: <b>${responseapi.data.low} $</b> 
                `
+
             }
             return `КУрс крипто`
         })

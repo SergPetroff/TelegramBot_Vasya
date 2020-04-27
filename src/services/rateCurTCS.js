@@ -34,14 +34,14 @@ const showExchangeTCS =  async ()=>{
     const dataExc= await getDataFromTCSAPI()
     
     if(dataExc){
-      const strusd = dataExc.usdrub.sell?` <b>$:</b> я покупаю: <b>${dataExc.usdrub.sell}</b>,  я продаю: <b>${dataExc.usdrub.buy}</b>, спред: <b>${dataExc.usdrub.spread?dataExc.usdrub.spread:"н/д"}%</b>`:`<b>$: н/д</b> <i> повторите запрос позже</i>`
-      const streur = dataExc.eurrub.sell?`<b>€:</b> я покупаю: <b>${dataExc.eurrub.sell}</b>,  я продаю: <b>${dataExc.eurrub.buy}</b>, спред: <b>${dataExc.eurrub.spread?dataExc.eurrub.spread:"н/д"}%</b>`:`<b>€: н/д</b> <i> повторите запрос позже</i>`
-      const strgbp = dataExc.gbprub.sell?`<b>£:</b> я покупаю: <b>${dataExc.gbprub.sell}</b>,  я продаю: <b>${dataExc.gbprub.buy}</b>, спред: <b>${dataExc.gbprub.spread?dataExc.gbprub.spread:"н/д"}%</b>`:`<b>£: н/д</b> <i> повторите запрос позже</i>`
+      const strusd = dataExc.usdrub.sell?` <b>$:</b> покупка: <b>${dataExc.usdrub.sell}</b>, продажа: <b>${dataExc.usdrub.buy}</b>, спред: <b>${dataExc.usdrub.spread?dataExc.usdrub.spread:"н/д"}%</b>`:`<b>$: н/д</b> <i> повторите запрос позже</i>`
+      const streur = dataExc.eurrub.sell?`<b>€:</b> покупка: <b>${dataExc.eurrub.sell}</b>, продажа: <b>${dataExc.eurrub.buy}</b>, спред: <b>${dataExc.eurrub.spread?dataExc.eurrub.spread:"н/д"}%</b>`:`<b>€: н/д</b> <i> повторите запрос позже</i>`
+      const strgbp = dataExc.gbprub.sell?`<b>£:</b> покупка: <b>${dataExc.gbprub.sell}</b>, продажа: <b>${dataExc.gbprub.buy}</b>, спред: <b>${dataExc.gbprub.spread?dataExc.gbprub.spread:"н/д"}%</b>`:`<b>£: н/д</b> <i> повторите запрос позже</i>`
        return `
-       💸<b>Курс валют в Тинькофф банк к рублю</b>
-       ${strusd}
-       ${streur}
-       ${strgbp}
+       🤑<b>Тиньков банк</b>
+    ${strusd}
+    ${streur}
+    ${strgbp}
        `
     }else{
         return `Произошла досадная ошибка 😢`
