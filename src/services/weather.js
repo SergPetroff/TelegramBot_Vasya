@@ -1,6 +1,6 @@
 const axios = require("axios");
 const countryEmoji = require("country-emoji");
-const  weatherservice_key = "8802edb4386b2aa0cb701ee80caaf778"
+const  {WEATHERSERVICE_KEY} = require('../keys/keys')
 
 
 const getByCity = (params) => {
@@ -13,11 +13,9 @@ const getByCity = (params) => {
 const showWeatherInfo = async (cityname) =>{
     try {
       
-      // var resptext = ctx.message.text
-      // var text=resptext.split("/").length===2?resptext.split("/")[1]:resptext
       if(cityname.length>2){
         const params = {
-          access_key: weatherservice_key,
+          access_key: WEATHERSERVICE_KEY,
           query:cityname
         }
         const weatherdata = await getByCity(params);
