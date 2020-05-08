@@ -14,8 +14,8 @@ const rateCrypto = require('./services/rateCrypto')
 const wizardWeather = require('./wizard/weather_wiz')
 const wizCovidFind = require('./wizard/covid_wiz')
 const { enter, leave } = Stage
-const BOT_TOKEN = process.env.BOT_TOKEN || "95669930:AAFufAdJdpOtMLRTUlzOM3twxLzBq-geZHE"
-const URL = process.env.URL || 'https://pumpkin-pie-87349.herokuapp.com';
+const {BOT_TOKEN} = require('./keys/keys')
+const {HEROKU_URL} = require('./keys/keys')
 
 
 const port = process.env.PORT || 3000;
@@ -140,8 +140,8 @@ bot.action('changeMoney',async (ctx, next) => {
 console.log(`env: ${process.env.NODE_ENV}`)
 if(process.env.NODE_ENV==='production'){
   
-  console.log(`Run app on url: ${URL}/bot${BOT_TOKEN}`)
-  bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
+  console.log(`Run app on url: ${HEROKU_URL}/bot${BOT_TOKEN}`)
+  bot.telegram.setWebhook(`${HEROKU_URL}/bot${BOT_TOKEN}`);
   bot.startWebhook(`/bot${BOT_TOKEN}`, null, port)
 }else{
 

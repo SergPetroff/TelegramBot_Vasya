@@ -47,7 +47,8 @@ covidService.InfoOnCountry = async (country)=>{
         return []
         
     }else {
-        return data.response.slice(0,20).sort(compare).slice(0,6)
+      const excludecountry =['All', 'Europe','Asia','South-America','North-America']
+        return data.response.filter(flt => flt.cases.total>100000 && !excludecountry.includes(flt.country)).sort(compare).slice(0,6)
     }
   }
 

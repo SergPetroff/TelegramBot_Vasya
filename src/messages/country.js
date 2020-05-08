@@ -14,7 +14,7 @@ const toDate = date =>{
 
 module.exports = (data)=>{
     return `
-        Страна: *${data.country}* ${countryEmoji.flag(data.country) || ''} *${toDate(data.time)}*
+    *${data.country}* ${countryEmoji.flag(data.country) || ''} ${toDate(data.time)}
     🦠 Новые случаи: *${data.cases.new?data.cases.new:"н/д"}*
     💊 Всего сейчас: *${data.cases.active}*
     👍 Вылечились: *${data.cases.recovered}*
